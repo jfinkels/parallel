@@ -1,0 +1,79 @@
+\documentclass{article}
+
+\usepackage{amsthm}
+\usepackage[pdftitle={Parallel random access machines}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
+
+\newtheorem{todo}{TODO}
+\newtheorem*{currently}{Currently working on...}
+
+\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+
+\author{Jef{}frey Finkelstein}
+\date{\today}
+\title{Parallel random access machines}
+
+\begin{document}
+
+\maketitle
+
+\section*{Parallel random access machines}
+There are many variations of the basic parallel random access machine (PRAM), which includes an arbitrary number of processors sharing an arbitrary amount of random access memory.
+An exclusive-read, exclusive-write PRAM (EREW PRAM) does not allow any concurrent memory accesses (so all concurrent memory accesses must be explicitly serialized in the program).
+An EREW PRAM is useful because any algorithm running on such a machine experiences no contention due to concurrent memory accesses.
+A concurrent-read, concurrent-write PRAM (CRCW PRAM), on the other hand, has a unit cost for any number of processors concurrently accessing any single memory location.
+In this model, contention due to concurrent memory accesses is not necessarily included in the running time.
+
+Can an EREW PRAM simulate a CRCW PRAM (with the intention of reducing or eliminating time spent queuing memory concurrent accesses in physical hardware implementations)?
+Due to a refinement of a simulation originally by Vishkin \cite{vishkin83}, a CRCW PRAM algorithm running in time $t(n)$ on $p(n)$ processors can be simulated by an EREW PRAM algorithm running in time $O(t(n)\cdot\lg n)$ on $p(n)$ processors.
+
+\section*{Queue-read, queue-write parallel random access machines}
+Gibbons, Matias, and Ramachandran \cite{gmr98a} define the queue-read, queue-write PRAM (QRQW PRAM).
+Whereas the EREW PRAM does not allow concurrent memory accesses and the CRCW PRAM has a unit cost for each concurrent memory access, the QRQW PRAM has a time penalty at each step directly proportional to the number of concurrent memory accesses.
+This is the cost due to contention (or the ``queuing delay''), intended to model the cost of servicing memory access requests sequentially at the memory module of the machine.
+
+The QRQW PRAM is ``more powerful'' than the EREW PRAM, because we may be able to collapse multiple exclusive memory accesses into a single concurrent one.
+(Even so, there are some algorithms in which such a simulation does not necessarily result in a decreased running time.)
+The QRQW PRAM is ``less powerful'' than the CRCW PRAM, because the CRCW PRAM does not account for the cost due to contention during memory accesses.
+
+\cite{gmr98a} briefly provides the simple simulation of a QRQW PRAM by a CRCW PRAM, but I could not seem to find a work which provides a simulation of a QRQW PRAM by a EREW PRAM.
+
+\begin{todo}
+  Does a simulation of a QRQW PRAM on an EREW PRAM incur a multiplicative $O(\lg n)$ penalty like the simulation of a CRCW PRAM on an EREW PRAM?
+\end{todo}
+
+\cite{gmr98a} also provides some theorems about ``time separations'' among different variants of PRAMs, but they don't seem to define what that means; it has something to do with time lower bounds.
+
+\begin{currently}
+  Reading more about the QRQW PRAM model, its relation to other PRAM models.
+\end{currently}
+
+\section*{Variants of the queue-read, queue-write parallel random access machine}
+
+In \cite{gmr98b}, the authors define single instruction, multiple data (SIMD) QRQW PRAMs, and multiple instruction, multiple data (MIMD) QRQW PRAMs.
+In \cite{gmr98a}, they define QRQW asynchronous PRAMs, in which the computation at each processor proceeds asynchronously, but concurrent memory accesses to the same memory location truly form a queue which is processed serially; the head of the queue, if it is not empty, is dequeued and processed at each time step.
+
+\section*{The explicit multi-threading machine}
+Vishkin, Caragea and Lee \cite{vcl06} describe complexity measures for the Explicit Multi-Threading (XMT) machine (introduced in \cite{vdbn98}).
+When computing the overall complexity of an algorithm written for the XMT machine, they include the computation depth, the number of round-trips to memory, and the queuing delay.
+This machine is similar to the QRQW PRAM.
+
+\begin{currently}
+  Determining how the XMT model relates to the QRQW PRAM model.
+\end{currently}
+
+\section*{About this work}
+
+Copyright 2012 Jef{}frey Finkelstein.
+
+This work is licensed under the Creative Commons Attribution-ShareAlike License 3.0.
+Visit \mbox{\url{https://creativecommons.org/licenses/by-sa/3.0/}} to view a copy of this license.
+
+The \LaTeX{} markup which generated this document is available on the World Wide Web at \mbox{\url{https://github.com/jfinkels/parallel}}.
+It is also licensed under the Creative Commons Attribution-ShareAlike License.
+
+The author can be contacted via email at \email{jeffreyf@bu.edu}.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
