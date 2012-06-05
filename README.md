@@ -11,9 +11,18 @@ It is also licensed under the Creative Commons Attribution-ShareAlike License.
 
 The author can be contacted via email at <jeffreyf@bu.edu>.
 
+[1]: https://creativecommons.org/licenses/by-sa/3.0/
+
+## Getting and compiling this work ##
+
+To get a copy of the most recent version of this work:
+
+    git clone git@github.com:jfinkels/parallel.git
+
 To compile this work:
 
-    pdflatex parallel && bibtex parallel && pdflatex parallel \
-        && pdflatex parallel
-
-[1]: https://creativecommons.org/licenses/by-sa/3.0/
+    cd parallel
+    pdflatex parallel
+    bibtex parallel
+    pdflatex parallel
+    pdflatex parallel
