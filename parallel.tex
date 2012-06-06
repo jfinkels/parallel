@@ -3,8 +3,8 @@
 \usepackage{amsthm}
 \usepackage[pdftitle={Parallel random access machines}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
 
-\newtheorem{todo}{TODO}
-\newtheorem*{currently}{Currently working on...}
+\newtheorem*{todo}{TODO}
+\newtheorem*{currently}{Currently working on..}
 
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 
@@ -43,10 +43,6 @@ The QRQW PRAM is ``less powerful'' than the CRCW PRAM, because the CRCW PRAM doe
 
 \cite{gmr98a} also provides some theorems about ``time separations'' among different variants of PRAMs, but they don't seem to define what that means; it has something to do with time lower bounds.
 
-\begin{currently}
-  Reading more about the QRQW PRAM model, its relation to other PRAM models.
-\end{currently}
-
 \section*{Variants of the queue-read, queue-write parallel random access machine}
 
 In \cite{gmr98b}, the authors define single instruction, multiple data (SIMD) QRQW PRAMs, and multiple instruction, multiple data (MIMD) QRQW PRAMs.
@@ -54,20 +50,50 @@ In \cite{gmr98a}, they define QRQW asynchronous PRAMs, in which the computation 
 
 \section*{Queuing shared memory machines}
 
-The queuing shared memory (QSM) machine \cite{gmr97} is a essentially a parameterized QRQW PRAM in which the parameter $g$ scales the cost (of each step in each processor) due to memory accesses.
+The queuing shared memory (QSM) machine \cite{gmr99} is a essentially a parameterized QRQW PRAM in which the parameter $g$ scales the cost (of each step in each processor) due to memory accesses.
 It is considered a ``bulk-synchrony'' model because it allows each processor to operate asynchronously between barrier synchronizations.
 (This is a compromise between a completely synchronous model and a completely asynchronous model.)
 
+\section*{Bulk synchronous parallel random access machine}
+
+The bulk syncronous parallel (BSP) \cite{valiant89} model is really a \emph{distributed} computation model, in that it has an arbitrary number of processors, each with local memory, connected via a (stateless) network with limited bandwidth.
+
+\begin{todo}
+  Get a copy of \cite{valiant89}.
+\end{todo}
+
+The bulk synchronous PRAM (BSPRAM) \cite{tiskin98} is a generalization of the BSP model which has an arbitrary number of PRAMs connected to a bandwidth-limited shared memory (in place of a bandwidth-limited network).
+If we choose the PRAMs in the BSPRAM to be QRQW PRAMs, this essentially yields a generalization of a QSM machine with an extra parameter, $l$, which measures latency at shared memory.
+A QSM machine is essentially a QRQW BSPRAM with $l=1$ (since the QSM machine does not penalize latency at shared memory).
+
+\section*{Memory access complexity}
+
+In \cite{zstc98, zhang00}, Zhang et al. suggest that as memory access becomes a bottleneck, it pays to examine computational complexity not only in terms of time, space, and number of processors, but also in terms of \emph{memory access complexity}.
+Memory access complexity measures the cost due to temporal and spatial locality of memory accesses in an algorithm (as well as ``contiguous and non-contiguous accesses, short message[s] and long message[s], etc.'' \cite{zcsm07}).
+
+\begin{todo}
+  Get our hands on a copies of \cite{zstc98} and \cite{zhang00}.
+  They are hard to find because one is from a conference in Asia from 1998, and one is a dissertation at a Chinese university.
+  In the meantime, a brief description of memory access complexity can be found in \cite[Section~4.3]{zcsm07}.
+\end{todo}
+
 \section*{Other models of parallel computation}
 
-There are many, many other models of parallel computing machines, many of which are likely more accurate for contemporary machines than the QRQW PRAM; see \cite{zcsm07} for details and a listing of modern parallel computation models.
+There are many, many other models of parallel computing machines; see \cite{zcsm07} for details and a listing of modern parallel computation models.
 In that work, all the PRAMs as well as the QSM discussed in the previous sections are considered ``first generation'' models because they use a shared memory model.
 The second generation models use distributed memory and the third hierarchical memory.
 
+It seems that most models can be simulated on most other models with small costs.
+
 \begin{todo}
-  Which of the models mentioned in \cite{zcsm07} is closest to our current consumer-grade hardware?
+  Which of the models mentioned in \cite{zcsm07} is closest to our current hardware?
   Which will be closest to the next-generation of hardware?
 \end{todo}
+
+\section*{Lower bounds for parallel models of computation}
+
+\cite{mr98} provides lower bounds for certain problems on the QSM and BSP models, by using a generalized shared memory (GSM) machine.
+This is a generalization of both QSM and BSP.
 
 \section*{The explicit multi-threading machine}
 Vishkin, Caragea and Lee \cite{vcl06} describe complexity measures for the Explicit Multi-Threading (XMT) machine (introduced in \cite{vdbn98}).
@@ -76,7 +102,7 @@ They also include additional cost due to thead and processor management when the
 
 \begin{currently}
   Determining how the XMT model relates to other models for parallel computing machines.
-  It is similar to the QSM model, but that doesn't account for the XMT memory hierarchy (that is, caches and memory modules).
+  It currently seems most similar to the QRQW BSPRAM model, though we might also add memory access complexity costs.
 \end{currently}
 
 \section*{About this work}
