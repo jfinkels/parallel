@@ -3,10 +3,13 @@
 \usepackage{amsthm}
 \usepackage[pdftitle={Parallel random access machines}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
 
-\newtheorem*{todo}{TODO}
-\newtheorem*{currently}{Currently working on..}
-
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{todo}{TODO}
+\newtheorem{currently}{Currently working on..}
+
+\newenvironment{idea}{\begin{proof}[Proof idea]}{\end{proof}}
 
 \author{Jef{}frey Finkelstein}
 \date{\today}
@@ -16,7 +19,7 @@
 
 \maketitle
 
-\section*{Parallel random access machines}
+\section{Parallel random access machines}
 There are many variations of the basic parallel random access machine (PRAM), which includes an arbitrary number of processors sharing an arbitrary amount of random access memory.
 An exclusive-read, exclusive-write PRAM (EREW PRAM) does not allow any concurrent memory accesses (so all concurrent memory accesses must be explicitly serialized in the program).
 An EREW PRAM is useful because any algorithm running on such a machine experiences no contention due to concurrent memory accesses.
@@ -26,7 +29,7 @@ In this model, contention due to concurrent memory accesses is not necessarily i
 Can an EREW PRAM simulate a CRCW PRAM (with the intention of reducing or eliminating time spent queuing memory concurrent accesses in physical hardware implementations)?
 Due to a refinement of a simulation originally by Vishkin \cite{vishkin83}, a CRCW PRAM algorithm running in time $t(n)$ on $p(n)$ processors can be simulated by an EREW PRAM algorithm running in time $O(t(n)\cdot\lg n)$ on $p(n)$ processors.
 
-\section*{Queue-read, queue-write parallel random access machines}
+\section{Queue-read, queue-write parallel random access machines}
 Gibbons, Matias, and Ramachandran \cite{gmr98a} define the queue-read, queue-write PRAM (QRQW PRAM).
 Whereas the EREW PRAM does not allow concurrent memory accesses and the CRCW PRAM has a unit cost for each concurrent memory access, the QRQW PRAM has a time penalty at each step directly proportional to the number of concurrent memory accesses.
 This is the cost due to memory contention (or the ``queuing delay''), intended to model the cost of servicing memory access requests sequentially at the memory module of the machine.
@@ -43,18 +46,18 @@ The QRQW PRAM is ``less powerful'' than the CRCW PRAM, because the CRCW PRAM doe
 
 \cite{gmr98a} also provides some theorems about ``time separations'' among different variants of PRAMs, but they don't seem to define what that means; it has something to do with time lower bounds.
 
-\section*{Variants of the queue-read, queue-write parallel random access machine}
+\section{Variants of the queue-read, queue-write parallel random access machine}
 
 In \cite{gmr98b}, the authors define single instruction, multiple data (SIMD) QRQW PRAMs, and multiple instruction, multiple data (MIMD) QRQW PRAMs.
 In \cite{gmr98a}, they define QRQW asynchronous PRAMs, in which the computation at each processor proceeds asynchronously, but concurrent memory accesses to the same memory location truly form a queue which is processed serially; the head of the queue, if it is not empty, is dequeued and processed at each time step.
 
-\section*{Queuing shared memory machines}
+\section{Queuing shared memory machines}
 
 The queuing shared memory (QSM) machine \cite{gmr99} is a essentially a parameterized QRQW PRAM in which the parameter $g$ scales the cost (of each step in each processor) due to memory accesses.
 It is considered a ``bulk-synchrony'' model because it allows each processor to operate asynchronously between barrier synchronizations.
 (This is a compromise between a completely synchronous model and a completely asynchronous model.)
 
-\section*{Bulk synchronous parallel random access machine}
+\section{Bulk synchronous parallel random access machine}
 
 The bulk syncronous parallel (BSP) \cite{valiant89} model is really a \emph{distributed} computation model, in that it has an arbitrary number of processors, each with local memory, connected via a (stateless) network with limited bandwidth.
 
@@ -66,7 +69,7 @@ The bulk synchronous PRAM (BSPRAM) \cite{tiskin98} is a generalization of the BS
 If we choose the PRAMs in the BSPRAM to be QRQW PRAMs, this essentially yields a generalization of a QSM machine with an extra parameter, $l$, which measures latency at shared memory.
 A QSM machine is essentially a QRQW BSPRAM with $l=1$ (since the QSM machine does not penalize latency at shared memory).
 
-\section*{Memory access complexity}
+\section{Memory access complexity}
 
 In \cite{zstc98, zhang00}, Zhang et al. suggest that as memory access becomes a bottleneck, it pays to examine computational complexity not only in terms of time, space, and number of processors, but also in terms of \emph{memory access complexity}.
 Memory access complexity measures the cost due to temporal and spatial locality of memory accesses in an algorithm (as well as ``contiguous and non-contiguous accesses, short message[s] and long message[s], etc.'' \cite{zcsm07}).
@@ -77,7 +80,7 @@ Memory access complexity measures the cost due to temporal and spatial locality 
   In the meantime, a brief description of memory access complexity can be found in \cite[Section~4.3]{zcsm07}.
 \end{todo}
 
-\section*{Other models of parallel computation}
+\section{Other models of parallel computation}
 
 There are many, many other models of parallel computing machines; see \cite{zcsm07} for details and a listing of modern parallel computation models.
 In that work, all the PRAMs as well as the QSM discussed in the previous sections are considered ``first generation'' models because they use a shared memory model.
@@ -90,12 +93,12 @@ It seems that most models can be simulated on most other models with small costs
   Which will be closest to the next-generation of hardware?
 \end{todo}
 
-\section*{Lower bounds for parallel models of computation}
+\section{Lower bounds for parallel models of computation}
 
 \cite{mr98} provides lower bounds for certain problems on the QSM and BSP models, by using a generalized shared memory (GSM) machine.
 This is a generalization of both QSM and BSP.
 
-\section*{The explicit multi-threading machine}
+\section{The explicit multi-threading machine}
 Vishkin, Caragea and Lee \cite{vcl06} describe complexity measures for the Explicit Multi-Threading (XMT) machine (introduced in \cite{vdbn98}).
 When computing the overall complexity of an algorithm written for the XMT machine, they include the computation depth, the number of round-trips to memory, and the queuing delay.
 They also include additional cost due to thead and processor management when there are more threads than processor (which could be called ``processor contention'').
@@ -105,7 +108,7 @@ They also include additional cost due to thead and processor management when the
   It currently seems most similar to the QRQW BSPRAM model, though we might also add memory access complexity costs.
 \end{currently}
 
-\section*{Tradeoffs in resource usage}
+\section{Tradeoffs in resource usage}
 
 One of our goals is to examine the tradeoff among time, space, number of processors, number of round-trips to memory, queuing delay, etc.
 
@@ -114,7 +117,73 @@ One of our goals is to examine the tradeoff among time, space, number of process
   Note that simulating a QRQW PRAM on a EREW PRAM can tell us something about tradeoff between computation time and queuing delay.
 \end{todo}
 
-\section*{About this work}
+\subsection{Simulating a QRQW PRAM on an EREW PRAM}
+
+\subsubsection{Simulating a CRCW PRAM on an EREW PRAM}
+
+Vishkin showed that simulating a PRIORITY CRCW PRAM on a EREW PRAM can be done with a $O(\lg^2 n)$ increase in time.
+A PRIORITY CRCW PRAM is a CRCW PRAM in which write conflicts are resolved by choosing the processor with the smallest ID.
+This model is more powerful than both the COMMON CRCW PRAM (in which concurrent writes to the same address are only allowed when the processors write the same data) and the ARBITRARY CRCW PRAM (in which an arbitrary processor succeeds on concurrent writes), so simulating the PRIORITY CRCW PRAM model suffices to simulate these other two.
+
+\begin{theorem}[\cite{vishkin83}]
+  An algorithm which runs on an input of size $n$ on a CRCW PRAM with $p(n)$ processors in $t(n)$ time and $s(n)$ space can be simulated on an EREW PRAM with $p(n)$ processors in $O(t(n)\cdot \lg^2 n)$ time and $O(p(n) \cdot s(n))$ space.
+\end{theorem}
+\begin{idea}
+  The PRIORITY CRCW PRAM and EREW PRAM models are synchronous, so it suffices to show separately how to simulate a read step and a write step.
+
+  To simulate a write step, each processor writes the address, the processor's ID number, and the data to write to a memory address.
+  Perform Batcher sort, a $O(\lg^2 n)$ EREW PRAM (stable) sorting algorithm, on the addresses (then on processor ID number).
+  Each processor reads one of the addresses and reads the one before it (in the sorted sequence).
+  If the two are different, this processor has the lowest address of all processors attempting to write to this address, so it writes its value.
+  All other processors do nothing.
+
+  To simulate a read step, sort the sequence of addresses and IDs in $O(\lg^2 n)$ time as in the write step.
+  Each processor reads an address and the one before it, as above.
+  Create a bitmap with a $1$ where a processor sees that it has a new address and a $0$ where a processor does not see a new address.
+  Each processor corresponding to a $1$ reads from the corresponding address.
+  Perform a ``segmented prefix copy-right'', using the bitmap as the segment delimiters, to disseminate the data read in $O(\lg n)$ time.
+  ``Unsort'' the adresses and IDs along with the data read.
+\end{idea}
+
+A later $O(\lg n)$ EREW PRAM sorting algorithm due to Cole improves the above theorem.
+
+\begin{theorem}
+  An algorithm which runs on an input of size $n$ on a CRCW PRAM with $p(n)$ processors in $t(n)$ time and $s(n)$ space can be simulated on an EREW PRAM with $p(n)$ processors in $O(t(n)\cdot \lg n)$ time and $O(p(n) \cdot s(n))$ space.
+\end{theorem}
+
+See \cite{smith93} for more information on the Batcher sorting algorithm, the Cole sorting algorithm, and this simulation in general.
+\cite{savage98} also has the statement and proof of the earlier version of this theorem.
+
+\subsubsection{Simulating a SIMD-QRQW PRAM on an EREW PRAM}\label{sec:simdqrqwerew}
+
+A SIMD-QRQW PRAM is just a CRCW PRAM with an added time penalty due to concurrent reads and writes.
+Therefore, the same proof technique for simulating a CRCW PRAM on an EREW PRAM applies for simulating a SIMD-QRQW PRAM on an EREW PRAM.
+
+At each step of a SIMD-QRQW PRAM with $p$ processors, the time cost due to contention is at most $p$ (if all processors are accessing the same memory location).
+However, the simulated step on the EREW PRAM with $p$ processors still takes $O(\lg p)$ time.
+Suppose the SIMD-QRQW PRAM step has contention $\kappa$.
+If $\kappa\in O(\lg p)$, then the EREW PRAM simulation runs more slowly than the original algorithm.
+If $\kappa\in\Omega(\lg p)$, then the EREW PRAM simulation runs \emph{more quickly} than the original algorithm.
+
+This last fact is a bit unsettling; we expect a more restricted model of computation to take longer to decide a computational problem.
+We take this fact as evidence that the EREW PRAM is not refined enough to explore tradeoffs between time, space, number of processors, number of memory accesses, and queuing delays.
+
+\subsubsection{Simulating a MIMD-QRQW PRAM on an EREW PRAM}
+
+We first note the simulation of a MIMD-QRQW PRAM on a SIMD-QRQW PRAM:
+
+\begin{theorem}[\cite{gmr98a}, Observation 2.1]\label{thm:mimdsimdqrqw}
+  An algorithm which runs on an input of size $n$ on a MIMD-QRQW PRAM with $p(n)$ processors in $t(n)$ time and $s(n)$ space with a maximum time cost for a single step $\tau(n)$ can be simulated on a SIMD-QRQW PRAM with $p(n)\cdot \tau(n)$ processors in $O(t(n))$ time and $s(n) + \tau(n) \cdot p(n)$ space.
+\end{theorem}
+
+(The increase in space comes from the proof; it is not explicitly stated in the original theorem.)
+Combining \autoref{thm:mimdsimdqrqw} with the results stated in \autoref{sec:simdqrqwerew}, we find that simulating a step of a MIMD-QRQW PRAM on an EREW PRAM also is subject to the same unusual behavior, as described below.
+
+A step on the MIMD-QRQW PRAM with contention $\kappa$ becomes multiple steps on the SIMD-QRQW PRAM.
+Some of these steps are subject to contention $\kappa$ as well.
+The same analysis as above applies.
+
+\section{About this work}
 
 Copyright 2012 Jef{}frey Finkelstein.
 
