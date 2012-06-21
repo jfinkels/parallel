@@ -183,6 +183,29 @@ A step on the MIMD-QRQW PRAM with contention $\kappa$ becomes multiple steps on 
 Some of these steps are subject to contention $\kappa$ as well.
 The same analysis as above applies.
 
+\section{Highly parallel problems}
+
+\textsf{NC} is the class of all languages which can be decided by a (logarithmic space) uniform family of Boolean circuits with polynomial size, polylogarithmic depth, and fan-in two.
+If we view each of the gates in the circuit as a processor and each layer of the circuit as a single time step, then \textsf{NC} represents the class of languages decidable by a CREW PRAM with a polynomial number of processors running in polylogarithmic parallel time.
+Languages in \textsf{NC} are considered highly parallel.
+
+We know $\mathsf{L}\subseteq\mathsf{NL}\subseteq\mathsf{NC}^2\subseteq\mathsf{NC}\subseteq\mathsf{P}$.
+The first inclusion is obvious, the second is due to \cite{borodin77}, the third follow from the definition, and the last is because \textsf{NC} is logarithmic space uniform (so the circuit can be generated in polynomial time) and because circuit evaluation can be performed in polynomial time.
+
+\section{Inherently sequential problems}
+
+Languages which are complete for \textsf{P} under $\leq_m^{NC}$ reductions are considered inherently sequential, because a highly parallel solution (that is, an \textsf{NC} algorithm) for any one of them would imply a highly parallel solution for all problems in \textsf{P}.
+
+\begin{todo}
+  What is the relationship between logarithmic space many-one reductions ($\leq_m^L$) and \textsf{NC} many-one reductions ($\leq_m^{NC}$)?
+  Since $\mathsf{L}\subseteq\mathsf{NC}$, the former reduction implies the latter.
+\end{todo}
+
+\section{Highly parallel appromixations}
+
+An inherently sequential (that is, \textsf{P}-complete) optimization problem may still admit a highly parallel approximation.
+Analogous to $\mathsf{P}, \mathsf{APX}, \mathsf{FPTAS}, \mathsf{PTAS}, \mathsf{NPO}$, we have the same classes in \textsf{NC}, and in \textsf{L}.
+
 \section{About this work}
 
 Copyright 2012 Jef{}frey Finkelstein.
