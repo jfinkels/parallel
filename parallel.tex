@@ -3,6 +3,7 @@
 \usepackage{amsthm}
 \usepackage[pdftitle={Parallel random access machines}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
 
+\mathchardef\mhyphen="2D
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 
 \newtheorem{theorem}{Theorem}
@@ -103,21 +104,16 @@ Vishkin, Caragea and Lee \cite{vcl06} describe complexity measures for the Expli
 When computing the overall complexity of an algorithm written for the XMT machine, they include the computation depth, the number of round-trips to memory, and the queuing delay.
 They also include additional cost due to thead and processor management when there are more threads than processor (which could be called ``processor contention'').
 
-\begin{currently}
-  Determining how the XMT model relates to other models for parallel computing machines.
-  It currently seems most similar to the QRQW BSPRAM model, though we might also add memory access complexity costs.
-\end{currently}
+The XMT model combines some of the features of several different models of parallel computation, including a shared memory model, queuing delays, hierarchical memory access, memory segregated into modules, etc.
 
 \section{Tradeoffs in resource usage}
 
 One of our goals is to examine the tradeoff among time, space, number of processors, number of round-trips to memory, queuing delay, etc.
 
-\begin{todo}
-  Choose a fixed model of a computation and examine examples of algorithms with respect to these complexity measures.
-  Note that simulating a QRQW PRAM on a EREW PRAM can tell us something about tradeoff between computation time and queuing delay.
-\end{todo}
-
 \subsection{Simulating a QRQW PRAM on an EREW PRAM}
+
+Our first thought was to investigate eliminating queuing delay at the expense of computation depth.
+To do this, we consider Vishkin's EREW PRAM simulation of a CRCW PRAM, and try to adapt it to simulate a QRQW PRAM.
 
 \subsubsection{Simulating a CRCW PRAM on an EREW PRAM}
 
@@ -204,7 +200,20 @@ Languages which are complete for \textsf{P} under $\leq_m^{NC}$ reductions are c
 \section{Highly parallel appromixations}
 
 An inherently sequential (that is, \textsf{P}-complete) optimization problem may still admit a highly parallel approximation.
-Analogous to $\mathsf{P}, \mathsf{APX}, \mathsf{FPTAS}, \mathsf{PTAS}, \mathsf{NPO}$, we have the same classes in \textsf{NC}, and in \textsf{L}.
+Indeed, so do some \textsf{NP}- and \textsf{PSPACE}-complete optimization problems (for example, see \cite{hmrrrs98} for \textsf{NC} approximations for \textsf{NP}- and \textsf{PSPACE}-hard problems).
+Analogous to the chain of inclusions
+\begin{displaymath}
+  \mathsf{P} \subseteq \mathsf{PO} \subseteq \mathsf{FPTAS} \subseteq \mathsf{PTAS} \subseteq \mathsf{ApxPO} \subseteq \mathsf{poly\mhyphen ApxPO} \subseteq \mathsf{exp\mhyphen ApxPO} \subseteq \mathsf{NPO}
+\end{displaymath}
+for approximating \textsf{NP} optimization problems, we have
+\begin{displaymath}
+  \mathsf{NC} \subseteq \mathsf{NCO} \subseteq \mathsf{FNCAS} \subseteq \mathsf{NCAS} \subseteq \mathsf{ApxNCO} \subseteq \mathsf{poly\mhyphen ApxNCO} \subseteq \mathsf{exp\mhyphen ApxNCO} \subseteq \mathsf{NCO}
+\end{displaymath}
+for approximating \textsf{NC} optimization problems (some classes defined in \cite{dsst97}) and
+\begin{displaymath}
+  \mathsf{L} \subseteq \mathsf{LO} \subseteq \mathsf{FLAS} \subseteq \mathsf{LAS} \subseteq \mathsf{ApxLO} \subseteq \mathsf{poly\mhyphen ApxLO} \subseteq \mathsf{exp\mhyphen ApxLO} \subseteq \mathsf{NLO}
+\end{displaymath}
+for approximating \textsf{NL} optimization problems (classes defined in \cite{tantau07}).
 
 \section{About this work}
 
