@@ -77,6 +77,15 @@ Memory access complexity measures the cost due to temporal and spatial locality 
   In the meantime, a brief description of memory access complexity can be found in \cite[Section~4.3]{zcsm07}.
 \end{todo}
 
+\subsection{Parameterized parallel random access machine}
+
+The Parameterized PRAM (PPRAM) defined in \cite{hc} is a general family of PRAM models which assign a different cost to each unique type of operation.
+Several other PRAM-like models are special cases of this generalization.
+
+The PPRAM is parameterized by a four-tuple of positive real values, $(\alpha, \beta, \gamma, \delta)$, which are the costs for EREW memory access, CRCW memory access, multiprefix operation (for example, a ``prefix-sum'' operation), and global synchronization, respectively.
+(Local computation has a cost of one.)
+The benefit of this parameterized model is that one can analyze the tradeoffs in resource usage due to differences in distinct algorithms for a single computational problem.
+
 \subsection{Other models of parallel computation}
 
 There are many, many other models of parallel computing machines; see \cite{zcsm07} for details and a listing of modern parallel computation models.
