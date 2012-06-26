@@ -184,6 +184,29 @@ A step on the MIMD-QRQW PRAM with contention $\kappa$ becomes multiple steps on 
 Some of these steps are subject to contention $\kappa$ as well.
 The same analysis as above applies.
 
+\subsection{Commonly studied problems for resource usage in parallel random access machine models}
+
+Tradeoffs between amount of communication and number of processors in a partitioned PRAM (in which each of a finite set of processors receives only a subset of the input and there is a finite amount of shared memory) for the following problems are studied in \cite{abn99}.
+\begin{itemize}
+\item $k$-selection
+\item minimum
+\item prefix-sum
+\item integer sorting
+\item $k\mhyphen k$ routing
+\item permutation routing
+\item list reversal
+\end{itemize}
+
+Two algorithms for majority are given in \cite{hc}.
+
+Many algorithms for minimum weight spanning tree also exist because of the many applications, for example, in networking.
+
+There are also a bunch of PRAM approximation algorithms in \cite{dsst97}.
+
+\begin{todo}
+  Examine these algorithms with respect to queuing delay and number of round-trips to memory, etc., as performed in \cite{vcl06}.
+\end{todo}
+
 \section{Inherently sequential and highly parallel computational problems}
 
 \subsection{Highly parallel computational problems}\label{sec:definenc}
