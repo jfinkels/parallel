@@ -40,13 +40,8 @@ The QRQW PRAM is ``more powerful'' than the EREW PRAM, because we may be able to
 (Even so, there are some algorithms in which such a simulation does not necessarily result in a decreased running time.)
 The QRQW PRAM is ``less powerful'' than the CRCW PRAM, because the CRCW PRAM does not account for the cost due to contention during memory accesses.
 
-\cite{gmr98a} briefly provides the simple simulation of a QRQW PRAM by a CRCW PRAM, but I could not seem to find a work which provides a simulation of a QRQW PRAM by a EREW PRAM.
-
-\begin{todo}
-  Does a simulation of a QRQW PRAM on an EREW PRAM incur a multiplicative $O(\lg n)$ penalty like the simulation of a CRCW PRAM on an EREW PRAM?
-\end{todo}
-
-\cite{gmr98a} also provides some theorems about ``time separations'' among different variants of PRAMs, but they don't seem to define what that means; it has something to do with time lower bounds.
+\cite{gmr98a} briefly provides the simple simulation of a QRQW PRAM by a CRCW PRAM, but I could not seem to find a work which provides a simulation of a QRQW PRAM by a EREW PRAM (though we examine such a simulation in the next section).
+The same work also provides some theorems about ``time separations'' among different variants of PRAMs, but they don't seem to define what that means; it has something to do with time lower bounds.
 
 \section{Variants of the queue-read, queue-write parallel random access machine}
 
