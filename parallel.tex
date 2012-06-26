@@ -2,26 +2,27 @@
 
 \usepackage{amsthm}
 \usepackage{amsmath}
-\usepackage[pdftitle={Parallel random access machines}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
+\usepackage[pdftitle={Efficient and highly parallel computation}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
 
 \mathchardef\mhyphen="2D
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{todo}{TODO}
-\newtheorem{currently}{Currently working on..}
 
 \newenvironment{idea}{\begin{proof}[Proof idea]}{\end{proof}}
 
 \author{Jef{}frey Finkelstein}
 \date{\today}
-\title{Parallel random access machines}
+\title{Efficient and highly parallel computation}
 
 \begin{document}
 
 \maketitle
 
-\section{Parallel random access machines}
+\section{Models of computation}
+
+\subsection{Parallel random access machines}
 There are many variations of the basic parallel random access machine (PRAM), which includes an arbitrary number of processors sharing an arbitrary amount of random access memory.
 An exclusive-read, exclusive-write PRAM (EREW PRAM) does not allow any concurrent memory accesses (so all concurrent memory accesses must be explicitly serialized in the program).
 An EREW PRAM is useful because any algorithm running on such a machine experiences no contention due to concurrent memory accesses.
@@ -31,7 +32,7 @@ In this model, contention due to concurrent memory accesses is not necessarily i
 Can an EREW PRAM simulate a CRCW PRAM (with the intention of reducing or eliminating time spent queuing memory concurrent accesses in physical hardware implementations)?
 Due to a refinement of a simulation originally by Vishkin \cite{vishkin83}, a CRCW PRAM algorithm running in time $t(n)$ on $p(n)$ processors can be simulated by an EREW PRAM algorithm running in time $O(t(n)\cdot\lg n)$ on $p(n)$ processors.
 
-\section{Queue-read, queue-write parallel random access machines}
+\subsection{Queue-read, queue-write parallel random access machines}
 Gibbons, Matias, and Ramachandran \cite{gmr98a} define the queue-read, queue-write PRAM (QRQW PRAM).
 Whereas the EREW PRAM does not allow concurrent memory accesses and the CRCW PRAM has a unit cost for each concurrent memory access, the QRQW PRAM has a time penalty at each step directly proportional to the number of concurrent memory accesses.
 This is the cost due to memory contention (or the ``queuing delay''), intended to model the cost of servicing memory access requests sequentially at the memory module of the machine.
@@ -43,18 +44,18 @@ The QRQW PRAM is ``less powerful'' than the CRCW PRAM, because the CRCW PRAM doe
 \cite{gmr98a} briefly provides the simple simulation of a QRQW PRAM by a CRCW PRAM, but I could not seem to find a work which provides a simulation of a QRQW PRAM by a EREW PRAM (though we examine such a simulation in the next section).
 The same work also provides some theorems about ``time separations'' among different variants of PRAMs, but they don't seem to define what that means; it has something to do with time lower bounds.
 
-\section{Variants of the queue-read, queue-write parallel random access machine}
+\subsection{Variants of the queue-read, queue-write parallel random access machine}
 
 In \cite{gmr98b}, the authors define single instruction, multiple data (SIMD) QRQW PRAMs, and multiple instruction, multiple data (MIMD) QRQW PRAMs.
 In \cite{gmr98a}, they define QRQW asynchronous PRAMs, in which the computation at each processor proceeds asynchronously, but concurrent memory accesses to the same memory location truly form a queue which is processed serially; the head of the queue, if it is not empty, is dequeued and processed at each time step.
 
-\section{Queuing shared memory machines}
+\subsection{Queuing shared memory machines}
 
 The queuing shared memory (QSM) machine \cite{gmr99} is a essentially a parameterized QRQW PRAM in which the parameter $g$ scales the cost (of each step in each processor) due to memory accesses.
 It is considered a ``bulk-synchrony'' model because it allows each processor to operate asynchronously between barrier synchronizations.
 (This is a compromise between a completely synchronous model and a completely asynchronous model.)
 
-\section{Bulk synchronous parallel random access machine}
+\subsection{Bulk synchronous parallel random access machine}
 
 The bulk syncronous parallel (BSP) \cite{valiant89} model is really a \emph{distributed} computation model, in that it has an arbitrary number of processors, each with local memory, connected via a (stateless) network with limited bandwidth.
 
@@ -66,7 +67,7 @@ The bulk synchronous PRAM (BSPRAM) \cite{tiskin98} is a generalization of the BS
 If we choose the PRAMs in the BSPRAM to be QRQW PRAMs, this essentially yields a generalization of a QSM machine with an extra parameter, $l$, which measures latency at shared memory.
 A QSM machine is essentially a QRQW BSPRAM with $l=1$ (since the QSM machine does not penalize latency at shared memory).
 
-\section{Memory access complexity}
+\subsection{Memory access complexity}
 
 In \cite{zstc98, zhang00}, Zhang et al. suggest that as memory access becomes a bottleneck, it pays to examine computational complexity not only in terms of time, space, and number of processors, but also in terms of \emph{memory access complexity}.
 Memory access complexity measures the cost due to temporal and spatial locality of memory accesses in an algorithm (as well as ``contiguous and non-contiguous accesses, short message[s] and long message[s], etc.'' \cite{zcsm07}).
@@ -77,7 +78,7 @@ Memory access complexity measures the cost due to temporal and spatial locality 
   In the meantime, a brief description of memory access complexity can be found in \cite[Section~4.3]{zcsm07}.
 \end{todo}
 
-\section{Other models of parallel computation}
+\subsection{Other models of parallel computation}
 
 There are many, many other models of parallel computing machines; see \cite{zcsm07} for details and a listing of modern parallel computation models.
 In that work, all the PRAMs as well as the QSM discussed in the previous sections are considered ``first generation'' models because they use a shared memory model.
@@ -90,12 +91,12 @@ It seems that most models can be simulated on most other models with small costs
   Which will be closest to the next-generation of hardware?
 \end{todo}
 
-\section{Lower bounds for parallel models of computation}
+\subsection{Lower bounds for parallel models of computation}
 
 \cite{mr98} provides lower bounds for certain problems on the QSM and BSP models, by using a generalized shared memory (GSM) machine.
 This is a generalization of both QSM and BSP.
 
-\section{The explicit multi-threading machine}
+\subsection{The explicit multi-threading machine}
 Vishkin, Caragea and Lee \cite{vcl06} describe complexity measures for the Explicit Multi-Threading (XMT) machine (introduced in \cite{vdbn98}).
 When computing the overall complexity of an algorithm written for the XMT machine, they include the computation depth, the number of round-trips to memory, and the queuing delay.
 They also include additional cost due to thead and processor management when there are more threads than processor (which could be called ``processor contention'').
@@ -175,7 +176,9 @@ A step on the MIMD-QRQW PRAM with contention $\kappa$ becomes multiple steps on 
 Some of these steps are subject to contention $\kappa$ as well.
 The same analysis as above applies.
 
-\section{Highly parallel problems}\label{sec:definenc}
+\section{Inherently sequential and highly parallel computational problems}
+
+\subsection{Highly parallel computational problems}\label{sec:definenc}
 
 \textsf{NC} is the class of all languages which can be decided by a (logarithmic space) uniform family of Boolean circuits with polynomial size, polylogarithmic depth, and fan-in two.
 If we view each of the gates in the circuit as a processor and each layer of the circuit as a single time step, then \textsf{NC} represents the class of languages decidable by a CREW PRAM with a polynomial number of processors running in polylogarithmic parallel time.
@@ -184,7 +187,7 @@ Languages in \textsf{NC} are considered highly parallel.
 We know $\mathsf{L}\subseteq\mathsf{NL}\subseteq\mathsf{NC}^2\subseteq\mathsf{NC}\subseteq\mathsf{P}$.
 The first inclusion is obvious, the second is due to \cite{borodin77}, the third follow from the definition, and the last is because \textsf{NC} is logarithmic space uniform (so the circuit can be generated in polynomial time) and because circuit evaluation can be performed in polynomial time.
 
-\section{Inherently sequential problems}
+\subsection{Inherently sequential computational problems}
 
 Languages which are complete for \textsf{P} under $\leq_m^{NC}$ reductions are considered inherently sequential, because a highly parallel solution (that is, an \textsf{NC} algorithm) for any one of them would imply a highly parallel solution for all problems in \textsf{P}.
 \begin{todo}
@@ -195,7 +198,7 @@ Such problems would be more accurately described as ``inherently sequential in t
 
 The canonical natural \textsf{P}-complete problem is the Circuit Value Problem (CVP): given the encoding of both a Boolean circuit and its input, decide if the output of the circuit is 1.
 
-\section{Highly parallel appromixations}
+\subsection{Highly parallel appromixations}
 
 An inherently sequential (that is, \textsf{P}-complete) optimization problem may still admit a highly parallel approximation.
 Indeed, so do some \textsf{NP}- and \textsf{PSPACE}-complete optimization problems (for example, see \cite{hmrrrs98} for \textsf{NC} approximations for \textsf{NP}- and \textsf{PSPACE}-hard problems).
@@ -219,7 +222,7 @@ for approximating \textsf{NL} optimization problems (classes defined in \cite{ta
   As stated above, some definitions are given in \cite{dsst97}, though others are missing.
 \end{todo}
 
-\section{Average-case complexity}
+\subsection{Average-case complexity}
 
 \textsf{P}, \textsf{NP}, and \textsf{NP}-completeness are all defined using worst-case time complexity.
 Average-case complexity classes are defined using expected running times over a probability distribution on inputs of each size.
@@ -231,7 +234,7 @@ See \cite[Section~3.5.1]{yamakami97} for general definitions of average-case com
 The latter paper very briefly (that is, in a single sentence) states that their definitions can be used to define average-case logarithmic space-uniform \textsf{NC}.
 This is a bit indirect because the average-case hardness comes from the unifom Turing machine which generates the circuit, and not the circuit itself.
 
-\section{Average-case highly parallel problems}
+\subsection{Average-case highly parallel problems}
 
 One possible set of requirements for a problem to be considered ``highly parallel on average'' is
 \begin{enumerate}
