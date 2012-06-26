@@ -1,7 +1,6 @@
 \documentclass{article}
 
 \usepackage{amsthm}
-\usepackage{amsmath}
 \usepackage[pdftitle={Efficient and highly parallel computation}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
 
 \mathchardef\mhyphen="2D
@@ -207,10 +206,9 @@ Analogous to the chain of inclusions
   \mathsf{P} \subseteq \mathsf{PO} \subseteq \mathsf{FPTAS} \subseteq \mathsf{PTAS} \subseteq \mathsf{ApxPO} \subseteq \mathsf{poly\mhyphen ApxPO} \subseteq \mathsf{exp\mhyphen ApxPO} \subseteq \mathsf{NPO}
 \end{displaymath}
 for approximating \textsf{NP} optimization problems, we have
-\begin{align*}
-  \mathsf{NC} \subseteq \mathsf{NCO} \subseteq \mathsf{FNCAS} \subseteq \mathsf{NCAS} \subseteq \mathsf{ApxNCO} \\
-  \subseteq \mathsf{poly\mhyphen ApxNCO} \subseteq \mathsf{exp\mhyphen ApxNCO} \subseteq \mathsf{NCO}
-\end{align*}
+\begin{displaymath}
+  \mathsf{NC} \subseteq \mathsf{NCO} \subseteq \mathsf{FNCAS} \subseteq \mathsf{NCAS} \subseteq \mathsf{ApxNCO} \subseteq \mathsf{poly\mhyphen ApxNCO} \subseteq \mathsf{exp\mhyphen ApxNCO}
+\end{displaymath}
 for approximating \textsf{NC} optimization problems (some classes defined in \cite{dsst97}) and
 \begin{displaymath}
   \mathsf{L} \subseteq \mathsf{LO} \subseteq \mathsf{FLAS} \subseteq \mathsf{LAS} \subseteq \mathsf{ApxLO} \subseteq \mathsf{poly\mhyphen ApxLO} \subseteq \mathsf{exp\mhyphen ApxLO} \subseteq \mathsf{NLO}
@@ -221,6 +219,8 @@ for approximating \textsf{NL} optimization problems (classes defined in \cite{ta
   The precise hierarchy of classes of problems approximable in \textsf{NC} does not seem to have been defined.
   As stated above, some definitions are given in \cite{dsst97}, though others are missing.
 \end{todo}
+
+Unlike the \textsf{PO} and \textsf{LO} inclusion chains, there is no immediate non-deterministic analog of \textsf{NCO} which includes the rest of the \textsf{NC} approximation classes.
 
 \subsection{Average-case complexity}
 
