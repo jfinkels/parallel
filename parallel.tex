@@ -82,7 +82,7 @@ Memory access complexity measures the cost due to temporal and spatial locality 
 The Parameterized PRAM (PPRAM) defined in \cite{hc} is a general family of PRAM models which assign a different cost to each unique type of operation.
 Several other PRAM-like models are special cases of this generalization.
 
-The PPRAM is parameterized by a four-tuple of positive real values, $(\alpha, \beta, \gamma, \delta)$, which are the costs for EREW memory access, CRCW memory access, multiprefix operation (for example, a ``prefix-sum'' operation), and global synchronization, respectively.
+The PPRAM is parameterized by a four-tuple of positive reals, $(\alpha, \beta, \gamma, \delta)$, which are the costs for EREW memory access, CRCW memory access, multiprefix operation (for example, a ``prefix-sum'' operation), and global synchronization, respectively.
 (Local computation has a cost of one.)
 The benefit of this parameterized model is that one can analyze the tradeoffs in resource usage due to differences in distinct algorithms for a single computational problem.
 
@@ -188,7 +188,7 @@ A step on the MIMD-QRQW PRAM with contention $\kappa$ becomes multiple steps on 
 Some of these steps are subject to contention $\kappa$ as well.
 The same analysis as above applies.
 
-\subsection{Commonly studied problems for resource usage in parallel random access machine models}
+\subsection{Commonly studied problems for PRAMs}
 
 Tradeoffs between amount of communication and number of processors in a partitioned PRAM (in which each of a finite set of processors receives only a subset of the input and there is a finite amount of shared memory) for the following problems are studied in \cite{abn99}.
 \begin{itemize}
@@ -223,7 +223,7 @@ There are also a bunch of PRAM approximation algorithms in \cite{dsst97}.
 
 \subsection{Highly parallel computational problems}\label{sec:definenc}
 
-\textsf{NC} is the class of all languages which can be decided by a (logarithmic space) uniform family of Boolean circuits with polynomial size, polylogarithmic depth, and fan-in two.
+\textsf{NC}{} is the class of all languages which can be decided by a (logarithmic space) uniform family of Boolean circuits with polynomial size, polylogarithmic depth, and fan-in two.
 If we view each of the gates in the circuit as a processor and each layer of the circuit as a single time step, then \textsf{NC} represents the class of languages decidable by a CREW PRAM with a polynomial number of processors running in polylogarithmic parallel time.
 Languages in \textsf{NC} are considered highly parallel.
 
@@ -260,11 +260,9 @@ for approximating \textsf{NC} optimization problems (some classes defined in \ci
 for approximating \textsf{NL} optimization problems (classes defined in \cite{tantau07}).
 
 \begin{todo}
-  The precise hierarchy of classes of problems approximable in \textsf{NC} does not seem to have been defined.
+  The precise hierarchy of classes of problems approximable in \textsl{\textsf{NC}}{} does not seem to have been defined.
   As stated above, some definitions are given in \cite{dsst97}, though others are missing.
 \end{todo}
-
-Unlike the \textsf{PO} and \textsf{LO} inclusion chains, there is no immediate non-deterministic analog of \textsf{NCO} which includes the rest of the \textsf{NC} approximation classes.
 
 \subsection{Average-case complexity}
 
@@ -288,17 +286,24 @@ One possible set of requirements for a problem to be considered ``highly paralle
 but average-case highly parallel computation does not seem to be explicitly defined anywhere.
 
 \begin{todo}
-  What is the appropriate definition for average-case \textsf{NC}?
-  Is it the definition given by \cite{bcgl89}, or would it make more sense to define it using the CREW PRAM characterization of \textsf{NC} (see \autoref{sec:definenc})?
+  What is the appropriate definition for average-case \textsl{\textsf{NC}}?
+  Is it the definition given by \cite{bcgl89}, or would it make more sense to define it using the CREW PRAM characterization of \textsl{\textsf{NC}}{} (see \autoref{sec:definenc})?
 \end{todo}
 
-However, there do seem to be a few examples of average-case highly parallel PRAM algorithms.
+There do seem to be a few examples of average-case highly parallel PRAM algorithms.
 \begin{itemize}
 \item Sublist Selection Problem \cite{pz91}
 \item $k$-Colorability of Permutation Graphs \cite{an99}
 \item Single-Source Shortest-Paths \cite{meyer02}
 \item various other graph problems \cite{rs92}
 \end{itemize}
+
+\begin{todo}
+  There has been some work on average-case complexity complexity of \textsl{\textsf{P}}-complete problems in \cite{sx99}, though I have not examined that yet.
+  Also, there doesn't seem to be much follow up to that work.
+
+  There is also plenty of work done on expected depth of random circuits, which may be of use.
+\end{todo}
 
 \section{About this work}
 
