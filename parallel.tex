@@ -71,6 +71,9 @@ A QSM machine is essentially a QRQW BSPRAM with $l=1$ (since the QSM machine doe
 In \cite{zstc98, zhang00}, Zhang et al. suggest that as memory access becomes a bottleneck, it pays to examine computational complexity not only in terms of time, space, and number of processors, but also in terms of \emph{memory access complexity}.
 Memory access complexity measures the cost due to temporal and spatial locality of memory accesses in an algorithm (as well as ``contiguous and non-contiguous accesses, short message[s] and long message[s], etc.'' \cite{zcsm07}).
 
+In \cite{av88}, the authors suggest the \emph{input/output model}, also known as the \emph{disk access model}, in which there are two layers of memory: a (fast) cache with a finite number of blocks and a (slow) disk.
+Some analysis of the amount of memory transfers required for common algorithms appears in lecture notes from Erik Demaine's advanced data structures course \cite{demaine07}.
+
 \subsection{Parameterized parallel random access machine}
 
 The Parameterized PRAM (PPRAM) defined in \cite{hc} is a general family of PRAM models which assign a different cost to each unique type of operation.
